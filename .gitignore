@@ -1,0 +1,34 @@
+# Node.js installed dependencies
+node_modules/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Temporary staging files
+staging/
+
+# Python and Django
+__pycache__/
+*.pyc
+.venv/
+venv/
+db.sqlite3
+
+# Java and Spring Boot
+target/
+.gradle/
+build/
+
+# macOS files
+.DS_Store
+
+# Editor settings
+.vscode/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
