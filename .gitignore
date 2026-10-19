@@ -10,6 +10,8 @@ node_modules/
 staging/
 
 # Python and Django
+*.egg-info/
+*.egg
 __pycache__/
 *.pyc
 .venv/
