@@ -1,0 +1,25 @@
+name: Node.js CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    container:
+      image: node:22-alpine
+
+    steps:
+      - name: Check Alpine environment
+        run: |
+          echo "Running CI inside Alpine Linux"
+          cat /etc/os-release
+          node --version
+          npm --version
