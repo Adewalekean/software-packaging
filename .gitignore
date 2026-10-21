@@ -1,6 +1,10 @@
 # Node.js installed dependencies
 node_modules/
 
+# Generated Node.js package artifacts
+nodejs-app/*.tgz
+nodejs-app/*.sha256
+
 # Environment variables and secrets
 .env
 .env.*
