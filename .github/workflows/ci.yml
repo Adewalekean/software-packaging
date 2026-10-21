@@ -19,28 +19,30 @@ jobs:
     container:
       image: node:22-alpine
 
+    defaults:
+      run:
+        working-directory: nodejs-app
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Check Alpine environment
         run: |
-          echo "Running CI inside Alpine Linux"
           cat /etc/os-release
           node --version
           npm --version
 
-      - name: Verify repository files
+      - name: Verify application files
         run: |
-          echo "Current working directory:"
           pwd
-
-          echo "Repository contents:"
           ls -la
+          test -f package.json
+          test -f package-lock.json
+          echo "Application files verified"
 
-          echo "Node.js application contents:"
-          ls -la nodejs-app
+      - name: Install dependencies
+        run: npm ci
 
-          echo "Checking package.json:"
-          test -f nodejs-app/package.json
-          echo "Node.js package.json found successfully"
+      - name: Verify dependencies
+        run: npm ls --depth=0
