@@ -9,6 +9,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -17,9 +20,27 @@ jobs:
       image: node:22-alpine
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Check Alpine environment
         run: |
           echo "Running CI inside Alpine Linux"
           cat /etc/os-release
           node --version
           npm --version
+
+      - name: Verify repository files
+        run: |
+          echo "Current working directory:"
+          pwd
+
+          echo "Repository contents:"
+          ls -la
+
+          echo "Node.js application contents:"
+          ls -la nodejs-app
+
+          echo "Checking package.json:"
+          test -f nodejs-app/package.json
+          echo "Node.js package.json found successfully"
