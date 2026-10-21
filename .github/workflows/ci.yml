@@ -35,8 +35,6 @@ jobs:
 
       - name: Verify application files
         run: |
-          pwd
-          ls -la
           test -f package.json
           test -f package-lock.json
           echo "Application files verified"
@@ -46,3 +44,26 @@ jobs:
 
       - name: Verify dependencies
         run: npm ls --depth=0
+
+      - name: Run automated tests
+        run: npm test
+
+      - name: Package Node.js application
+        run: npm pack
+
+      - name: Generate SHA-256 checksum
+        run: |
+          sha256sum nodejs-app-1.0.0.tgz > nodejs-app-1.0.0.tgz.sha256
+
+      - name: Verify package integrity
+        run: |
+          sha256sum -c nodejs-app-1.0.0.tgz.sha256
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nodejs-app-package
+          path: |
+            nodejs-app/nodejs-app-1.0.0.tgz
+            nodejs-app/nodejs-app-1.0.0.tgz.sha256
+          if-no-files-found: error
