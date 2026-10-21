@@ -27,6 +27,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-alpine-${{ hashFiles('nodejs-app/package-lock.json') }}
+          restore-keys: |
+            npm-alpine-
+
       - name: Check Alpine environment
         run: |
           cat /etc/os-release
@@ -44,6 +52,9 @@ jobs:
 
       - name: Verify dependencies
         run: npm ls --depth=0
+      
+      - name: Security audit
+        run: npm audit --omit=dev --audit-level=high
 
       - name: Run automated tests
         run: npm test
